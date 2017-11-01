@@ -205,7 +205,7 @@
       filter: blur(10px)
       img
         width: 100%
-  .detail
+    .detail
     position: fixed
     z-index: 100
     top: 0

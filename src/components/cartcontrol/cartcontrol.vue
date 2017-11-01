@@ -11,7 +11,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Vue from 'vue';
+  import Vue from 'vue'
   export default {
     props: {
       food: {
@@ -24,18 +24,18 @@
           return;
         }
         if (!this.food.count) {
-          Vue.set(this.food, 'count', 1);
+          Vue.set(this.food, 'count', 1)
         } else {
           this.food.count++;
         }
-        this.$emit('add', event.target);
+        this.$emit('add', event.target)
       },
       decreaseCart(event) {
         if (!event._constructed) {
           return;
         }
         if (this.food.count) {
-          this.food.count--;
+          this.food.count--
         }
       }
     }
