@@ -35,7 +35,7 @@
         <split v-show="food.info"></split>
         <div class="rating">
         	<h1 class="title">商品评价</h1>
-        	<ratingselect :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
+        	<ratingselect :selectType="selectType" @select="selectRating" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings" @toggle="toggleContent"></ratingselect>
         </div>
 	  	</div>
 	  </div>
@@ -65,7 +65,7 @@
 				desc: {
 					all: '全部',
 					positive: '推荐',
-					nagetive: '吐槽'
+					negative: '吐槽'
 				}
 			}
 		},
@@ -96,6 +96,18 @@
 			},
 			addFood(target) {
         this.$emit('add', target)
+      },
+      selectRating(type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
       }
 		},
 		components: {
