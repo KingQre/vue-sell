@@ -1,11 +1,17 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type">
-    	<span class="block positive" @click="select(2,$event)" v-text="desc.all"></span>
-    	<span class="block positive" @click="select(0,$event)" v-text="desc.positive"></span>
-    	<span class="block negative" @click="select(1,$event)" v-text="desc.negative"></span>
+    	<span class="block positive" 
+      @click="select(2,$event)" 
+      :class="{'active': selectType === 2}">{{desc.all}}
+      <span class="count">{{ratings.length}}</span></span><span class="block positive" 
+      @click="select(0,$event)" 
+      :class="{'active': selectType === 0}">{{desc.positive}}<span class="count">{{positive.length}}</span></span>
+    	<span class="block negative" 
+      @click="select(1,$event)" 
+      :class="{'active': selectType === 1}">{{desc.negative}}<span class="count">{{negative.length}}</span></span>
     </div>
-    <div class="switch">
+    <div class="switch" @click="toggleContent($event)" :class="{'on': onlyContent}">
     	<span class="icon-check_circle"></span>
     	<span class="text">只看有内容的评价</span>
     </div>
@@ -39,17 +45,35 @@
 					return {
 						all: '全部',
 						positive: '满意',
-						nagetive: '不满意'
+						negative: '不满意'
 					}
 				}
 			}
 		},
-    conputed: {
-      select(type,event) {
-        if(!event._constructed) {
+    methods: {
+      select(type, event) {
+        if (!event._constructed) {
           return
         }
-        this.$emit(select,type)
+        this.$emit('select', type)
+      },
+      toggleContent(event) {
+        if (!event._constructed) {
+          return
+        }
+        this.$emit('toggle')
+      }
+    },
+    computed: {
+      positive() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE
+        })
+      },
+      negative() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NAGETIVE
+        })
       }
     }
 	}
